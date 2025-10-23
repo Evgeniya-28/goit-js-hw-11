@@ -1,21 +1,22 @@
 import axios from 'axios';
 
-const API_KEY = '52790584-b8940124ef420833efbac5129';
-export function getImagesByQuery(query) {
-  return axios
-    .get('https://pixabay.com/api/', {
+const API_KEY = '52715870-cb8cb03de1263a77a911b462a';
+const BASE_URL = 'https://pixabay.com/api/';
+
+export async function getImagesByQuery(query) {
+  try {
+    const response = await axios.get(BASE_URL, {
       params: {
-        q: query,
         key: API_KEY,
+        q: query,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
-        per_page: 40,
       },
-    })
-    .then(response => response.data)
-    .catch(err => {
-      console.error('Error in getImagesByQuery:', err);
-      throw err;
     });
+    return response.data;
+  } catch (error) {
+    console.error('Помилка запиту:', error);
+    throw error;
+  }
 }
